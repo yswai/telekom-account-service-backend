@@ -1,0 +1,72 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /v1/accounts/
+  http2:
+    enabled: true
+
+spring:
+  application:
+    name: tx-s6-util-filetransfer-service-be
+  h2:
+    console.enabled: true
+#  jpa:
+#    database-platform: hibernate.dialect.H2Dialect
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+    hikari:
+      connectionTimeout: 30000
+      idleTimeout: 600000
+      maxLifetime: 1800000
+  cloud:
+    stream:
+      default-binder: noop
+  autoconfigure:
+    exclude: org.org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+      healthcheck:
+        enabled: true
+  instance:
+    leaseExpirationDurationInSeconds: 30
+    preferIpAddress: true
+  fetchRegistry: true
+           
+management:
+  health:
+    eureka:
+      enabled: false
+    mongo:
+      enabled: false
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include:
+          - info
+          - health
+          - prometheus
+          - loggers
+          - httptrace
+          - metrics
+          - threaddump
+          - heapdump
+          - env
+
+info:
+  app:
+    name: ACCOUNT-SERVICE
+    description: Telekom interview
+  version: 1.0.0
+
+logging:
+  path: ${user.home}/account-service
+  file: account-service
